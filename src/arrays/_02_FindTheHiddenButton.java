@@ -21,8 +21,12 @@ public class _02_FindTheHiddenButton implements ActionListener{
 	JFrame window;
 	JPanel panel;
 	int hiddenButton;
-	//1. create an array of JButtons. Don't initialize it yet.
+
 	
+	//1. create an array of JButtons. Don't initialize it yet.
+	String question = JOptionPane.showInputDialog("Enter a positive number:");
+	int num = Integer.parseInt(question);
+	JButton[] button;
 	
 	
 	//2 create an int variable called hiddenButton
@@ -45,17 +49,28 @@ public class _02_FindTheHiddenButton implements ActionListener{
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
 		//3.  Ask the user to enter a positive number and convert it to an int
-		String question = JOptionPane.showInputDialog("Enter a positive number:");
-		int num = Integer.parseInt(question);
+		button = new JButton[num];
+		Random r = new Random();
+		hiddenButton = r.nextInt(num);
+		System.out.println(hiddenButton);
 		for (int i = 0; i < num; i++) {
-			JButton[] button = new JButton[num];
 			button[i] = new JButton();
 			button[i].addActionListener(this);
 			panel.add(button[i]);
-			
+	
 		}
+		//button[hiddenButton].setText("ME");
 		window.add(panel);
 		window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		JOptionPane.showMessageDialog(null, "Instructions: You have to click one out of the number of buttons that you chose, and if you click the right one, it displays a message.");
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		button[hiddenButton].setText(null);
+		
 		//4. Initialize the array of JButtons to be the size of the int created in step 3
 		
 		//5. Make a for loop to iterate through the JButton array
@@ -87,7 +102,12 @@ public class _02_FindTheHiddenButton implements ActionListener{
 		JButton buttonClicked = (JButton)e.getSource();
 		
 		//17. if the hiddenButton is clicked, tell the user that they win.
-		
+		if(buttonClicked.equals(button[hiddenButton])) {
+			JOptionPane.showMessageDialog(null, "You Win!");
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "You Lose!");
+		}
 		//18. else tell them to try again
 	}
 }
